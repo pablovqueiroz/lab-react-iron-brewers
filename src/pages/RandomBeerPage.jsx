@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import beersJSON from "./../assets/beers.json";
+import axios from "axios";
 
 
 function RandomBeersPage() {
@@ -16,6 +17,20 @@ function RandomBeersPage() {
   // 1. Set up an effect hook to make a request for a random beer from the Beers API.
   // 2. Use axios to make a HTTP request.
   // 3. Use the response data from the Beers API to update the state variable.
+  useEffect(()=>{
+  async function getOneBeer() {
+    try {
+      const { data } = await axios(
+        `https://beers-api.edu.ironhack.com/beers/random`
+      );
+      console.log(data);
+      setRandomBeer(data)
+    } catch (error) { 
+      console.log(error)
+    }
+  }
+  getOneBeer()
+},[])
 
 
 
@@ -27,7 +42,7 @@ function RandomBeersPage() {
       {randomBeer && (
         <>
           <img
-            src={randomBeer.image_url}
+            src="https://images.unsplash.com/photo-1618183479302-1e0aa382c36b?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="beer"
             height="300px"
             width="auto"
